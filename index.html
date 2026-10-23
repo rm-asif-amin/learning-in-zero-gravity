@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning in Zero Gravity</title>
+  <meta name="description" content="Learning in Zero Gravity: altered physics as a source of spatially diverse robot experience. Project page.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Castoro&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css?v=20261022a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%232a78d6'/%3E%3Ccircle cx='16' cy='16' r='5' fill='white'/%3E%3C/svg%3E">
+  <style>
+    .two { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; align-items: end; }
+    .two img { width: 100%; height: auto; }
+    .fig img { width: 100%; height: auto; }
+    .headline-tiles video { aspect-ratio: 3 / 1; }
+    @media (max-width: 700px) { .two { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <h1>Learning in <span class="accent">Zero Gravity</span>: Altered Physics as a Source of Spatially Diverse Robot Experience</h1>
+    <div class="venue">Anonymous authors &middot; under review</div>
+    <div class="links">
+      <span class="btn disabled" title="Paper under review">
+        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zM14 3.5V8h4.5z"/></svg>Paper <span class="tag">under review</span>
+      </span>
+      <span class="btn disabled" title="Code release planned">
+        <svg viewBox="0 0 24 24"><path d="M8.6 16.6 4 12l4.6-4.6L7.2 6 1.2 12l6 6zm6.8 0L20 12l-4.6-4.6L16.8 6l6 6-6 6z"/></svg>Code <span class="tag">coming soon</span>
+      </span>
+    </div>
+
+    <div class="teaser-top">
+      <figure>
+        <video class="lazy" muted loop playsinline autoplay preload="none"
+               poster="static/images/teaser_zg_tasks_poster.jpg" data-src="static/videos/teaser_zg_tasks.mp4"></video>
+        <figcaption class="center">
+          <b>Zero-gravity experts on six tasks.</b> Objects start floating in mid-air; gravity switches on when the robot
+          touches or grasps them, and the task is finished as usual. 2&times; speed.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="tldr">
+      <b>TL;DR</b> &mdash; Simulated tabletop tasks only show a robot a near-2D slice of the world: objects rest on the
+      table. Instead of hand-designing 3D task setups, we <b class="k">edit the simulator's physics</b>: the object is
+      weightless until the robot touches or grasps it. Reinforcement-learning experts trained this way
+      <b class="k">explore the 3D workspace</b>, keep reaching and grasping objects placed at heights where
+      regular-gravity and gravity-randomized experts fail, and <b class="k">adapt faster</b> to spatially harder tasks.
+    </div>
+
+    <nav class="toc" aria-label="Sections">
+      <a href="#abstract">Abstract</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ================= HEADLINE ================= -->
+<section id="headline" style="padding-top:20px"><div class="container">
+  <figure class="fig">
+    <img src="static/images/fig_fig1_stages.png" alt="Three line charts: the share of episodes that reach, touch, and grasp or move the object, against the object's height. The zero-gravity line declines gradually; four gravity-trained baselines collapse above about 0.20 m." loading="lazy">
+    <figcaption>
+      <b>Gravity-trained policies stop at the table; zero-gravity training reaches up.</b> Zero-shot performance on
+      spatially harder variants of six tasks, where the object rests on a support at a height drawn uniformly over the
+      arm's reach (equal 10&nbsp;cm bins; mean over tasks; error bars: SEM over tasks). Every gravity-trained baseline,
+      including fixed and adaptive gravity randomization, collapses above about 0.20&nbsp;m; the zero-gravity expert
+      degrades gradually, also above its 0.10&ndash;0.50&nbsp;m training range (shaded).
+    </figcaption>
+  </figure>
+</div></section>
+
+<!-- ================= ABSTRACT ================= -->
+<section id="abstract"><div class="container">
+  <h2>Abstract</h2>
+  <p>
+    Simulated tabletop manipulation shows a robot a near-two-dimensional slice of the world: objects rest on the table,
+    so the policy only learns to reach, push and grasp close to the table plane. Getting spatial variety under Earth
+    gravity requires hand-designed 3D task setups such as shelves and supports. We propose an alternative that edits the
+    simulator's physics instead: beyond domain randomization, which treats physics variation as noise for robustness, we
+    use altered gravity as a source of spatial signal. Reinforcement-learning experts are trained with gravity switched off
+    for the object until the robot touches or grasps it, after which gravity returns and the task is finished as usual.
+    Selective containment volumes, thin walls that block the floating object but not the arm, keep the object from flying
+    away and make learning in zero gravity possible, and switching gravity on at contact or grasp prevents the reward
+    hacking we observe in pure zero gravity. Compared with experts trained under regular or randomized gravity at the same
+    cost, the zero-gravity experts produce the most varied gripper paths on all six tasks we test. To evaluate spatial
+    generalization we design spatially harder variants of the tabletop tasks, in which the object rests on a support at a
+    random height: there the zero-gravity experts reach the object in 68% of episodes at heights inside their training
+    range against 17&ndash;20% for the baselines, and in 41% above every arm's training range, where the baselines almost
+    never do. Fine-tuned on these variants, they also adapt faster.
+  </p>
+  <figure class="fig" style="max-width:640px;margin:18px auto 0">
+    <img src="static/images/fig_diversity_axes.png" alt="Diagram: task-setup and task-scale diversity span a plane under Earth physics; domain randomization moves a short way up a physics axis; zero gravity moves far along it." loading="lazy">
+    <figcaption><b>Our method in relation to existing sources of diversity.</b> Most work varies the task setup or its
+      scale under Earth physics; domain randomization perturbs physics around Earth values for robustness. Zero-gravity
+      training uses physics as a source of spatial signal, orthogonal to the other two and combinable with them.</figcaption>
+  </figure>
+</div></section>
+
+<!-- ================= METHOD ================= -->
+<section id="method"><div class="container">
+  <h2>Method</h2>
+  <figure class="fig" style="max-width:640px;margin-left:auto;margin-right:auto">
+    <img src="static/images/fig_method_switch.png" alt="Schematic: object floats with g = 0, the robot makes contact, gravity switches on for the rest of the episode." loading="lazy">
+  </figure>
+  <div class="two">
+    <figure class="fig" style="margin:0">
+      <img src="static/images/fig_containment_render.png" alt="Ray-traced render: a Franka arm reaches through a glass box into which a red cube floats." loading="lazy">
+    </figure>
+    <figure class="fig" style="margin:0">
+      <img src="static/images/fig_method_eval.png" alt="Schematic of supports holding objects at low, middle and high heights, to scale." loading="lazy">
+    </figure>
+  </div>
+  <p style="margin-top:16px">
+    <b>Selective containment volumes.</b> A floating object that is nudged keeps drifting out of reach. We enclose the
+    spawn volume in 1&nbsp;mm walls that collide with the object but not with the robot, and that have no visual shape,
+    so cameras never see them (drawn here as glass for illustration). This is what makes learning in zero gravity possible.
+  </p>
+  <p>
+    <b>Gravity switching.</b> In pure zero gravity, policies learn to shove the floating object toward the goal and let it
+    drift. Switching gravity on at contact or grasp, and gating object-pose reward terms behind the same switch, removes
+    these exploits; the rest of every episode is the ordinary task.
+  </p>
+  <p>
+    <b>Spatially harder evaluation.</b> We design a harder variant of every tabletop task: the object rests on a support at
+    a height drawn uniformly over the arm's reach. We report a staged metric (reach &rarr; touch &rarr; grasp or move
+    &rarr; success) to see where each policy fails. Baselines: regular gravity (with the same walls, and without) and
+    fixed and adaptive gravity randomization, with the same tasks, PPO recipe, budget and three seeds.
+  </p>
+</div></section>
+
+<!-- ================= RESULTS ================= -->
+<section id="results"><div class="container">
+  <h2>Results</h2>
+
+  <h3>Same layout, two policies</h3>
+  <figure class="fig headline-tiles">
+    <video class="lazy" muted loop playsinline autoplay preload="none"
+           poster="static/images/eval_tiles_poster.jpg" data-src="static/videos/eval_tiles_rt.mp4"></video>
+    <figcaption>Each column is one spatially harder layout: the zero-gravity expert (top) and the regular-gravity expert
+      (bottom) on the same seed. Badges mark the furthest stage reached. Episodes were chosen for illustration; the curves
+      give the averages.</figcaption>
+  </figure>
+
+  <h3>Zero-gravity experts explore the 3D workspace</h3>
+  <figure class="fig">
+    <img src="static/images/fig_traj3d.png" alt="3D plots of gripper paths on PullCube: zero-gravity paths rise to raised objects; regular-gravity paths stay near the table." loading="lazy">
+    <figcaption><b>Gripper paths in the workspace</b> (PullCube; same layouts and seeds for both policies; color = height of
+      that episode's object, squares = objects).</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="static/images/fig_density.png" alt="Side-view density maps of gripper positions for three tasks and four policies." loading="lazy">
+    <figcaption><b>Where the gripper goes.</b> Share of time steps spent in each 2&nbsp;cm cell (log scale), side view.
+      Gravity-trained experts stay near the table even when the object is half a meter up.</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="static/images/fig_q1_diversity.png" alt="Bar charts of workspace coverage and trajectory diversity for six tasks and five policies." loading="lazy">
+    <figcaption><b>Coverage and diversity</b> in a shared environment: the most varied gripper paths on 6/6 tasks and the
+      largest coverage on 5/6.</figcaption>
+  </figure>
+
+  <h3>They reach and handle raised objects, zero-shot</h3>
+  <figure class="fig">
+    <img src="static/images/fig_stages_by_task.png" alt="Per-task staged curves for six tasks." loading="lazy">
+    <figcaption><b>Zero-shot staged performance per task</b> (all heights). Ahead at the reach and touch stages on five of
+      six tasks; on RollBall the policies are close. Zero-shot task success is low for every policy, because the variants
+      add a step no expert was trained for (bringing the object off its support).</figcaption>
+  </figure>
+
+  <h3>They adapt faster to spatially harder tasks</h3>
+  <figure class="fig">
+    <img src="static/images/fig_finetune.png" alt="Fine-tuning curves for PullCube and learning speed across seven tasks." loading="lazy">
+    <figcaption><b>Fine-tuning on the harder variants.</b> (a) PullCube: 91% success within 5M steps against at most 42%
+      for every other starting point. (b) Learning speed (mean success over the first 10M steps) on seven tasks: ahead on
+      five, clearly on PullCube, PlaceSphere and RollBall.</figcaption>
+  </figure>
+</div></section>
+
+<!-- ================= BIBTEX ================= -->
+<section id="bibtex"><div class="container">
+  <h2>BibTeX</h2>
+  <div class="bib"><pre>@article{zerogravity2026,
+  title  = {Learning in Zero Gravity: Altered Physics as a Source of
+            Spatially Diverse Robot Experience},
+  author = {Anonymous},
+  year   = {2026},
+  note   = {Under review}
+}</pre></div>
+</div></section>
+</main>
+
+<footer><div class="container">Simulation: ManiSkill3 / SAPIEN. Page under construction; results as in the paper under review.</div></footer>
+
+<script>
+(function () {
+  var vids = document.querySelectorAll("video.lazy");
+  if (!("IntersectionObserver" in window)) { vids.forEach(function (v) { v.src = v.dataset.src; }); return; }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) {
+        if (!v.getAttribute("src")) { v.src = v.dataset.src; v.load(); }
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      } else if (!v.paused) { v.pause(); }
+    });
+  }, { rootMargin: "200px 0px" });
+  vids.forEach(function (v) { io.observe(v); });
+})();
+</script>
+</body>
+</html>
