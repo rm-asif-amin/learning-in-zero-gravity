@@ -66,7 +66,7 @@
 <!-- ================= HEADLINE ================= -->
 <section id="headline" style="padding-top:20px"><div class="container">
   <figure class="fig">
-    <img src="static/images/fig_fig1_stages.png" alt="Three line charts: the share of episodes that reach, touch, and grasp or move the object, against the object's height. The zero-gravity line declines gradually; four gravity-trained baselines collapse above about 0.20 m." loading="lazy">
+    <img src="static/images/fig_fig1_stages.png?v=20261022b" alt="Three line charts: the share of episodes that reach, touch, and grasp or move the object, against the object's height. The zero-gravity line declines gradually; four gravity-trained baselines collapse above about 0.20 m." loading="lazy">
     <figcaption>
       <b>Gravity-trained policies stop at the table; zero-gravity training reaches up.</b> Zero-shot performance on
       spatially harder variants of six tasks, where the object rests on a support at a height drawn uniformly over the
@@ -92,9 +92,9 @@
     hacking we observe in pure zero gravity. Compared with experts trained under regular or randomized gravity at the same
     cost, the zero-gravity experts produce the most varied gripper paths on all six tasks we test. To evaluate spatial
     generalization we design spatially harder variants of the tabletop tasks, in which the object rests on a support at a
-    random height: there the zero-gravity experts reach the object in 68% of episodes at heights inside their training
-    range against 17&ndash;20% for the baselines, and in 41% above every arm's training range, where the baselines almost
-    never do. Fine-tuned on these variants, they also adapt faster.
+    random height: there the zero-gravity experts reach the object in 79% of episodes at heights inside their training
+    range against 30&ndash;33% for the baselines, and in 54% above every arm's training range, where the baselines rarely
+    do (at most 3%). Fine-tuned on these variants, they also adapt faster.
   </p>
   <figure class="fig" style="max-width:640px;margin:18px auto 0">
     <img src="static/images/fig_diversity_axes.png" alt="Diagram: task-setup and task-scale diversity span a plane under Earth physics; domain randomization moves a short way up a physics axis; zero gravity moves far along it." loading="lazy">
@@ -168,7 +168,7 @@
 
   <h3>They reach and handle raised objects, zero-shot</h3>
   <figure class="fig">
-    <img src="static/images/fig_stages_by_task.png" alt="Per-task staged curves for six tasks." loading="lazy">
+    <img src="static/images/fig_stages_by_task.png?v=20261022b" alt="Per-task staged curves for six tasks." loading="lazy">
     <figcaption><b>Zero-shot staged performance per task</b> (all heights). Ahead at the reach and touch stages on five of
       six tasks; on RollBall the policies are close. Zero-shot task success is low for every policy (9.8% for zero gravity vs. 3.6&ndash;4.8% for the
       baselines, mean over tasks), because the variants add a step no expert was trained for (bringing the object off its
