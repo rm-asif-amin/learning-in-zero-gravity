@@ -107,15 +107,18 @@
 <!-- ================= METHOD ================= -->
 <section id="method"><div class="container">
   <h2>Method</h2>
-  <figure class="fig" style="max-width:640px;margin-left:auto;margin-right:auto">
-    <img src="static/images/fig_method_switch.png" alt="Schematic: object floats with g = 0, the robot makes contact, gravity switches on for the rest of the episode." loading="lazy">
+  <figure class="fig" style="max-width:720px;margin-left:auto;margin-right:auto">
+    <img src="static/images/fig_exploration_schematic.png?v=20261023" alt="Schematic in two panels: (a) a cube floats with g = 0 inside a dashed containment volume and the gripper reaches it; (b) zero-gravity gripper paths fan out through the volume to objects at many heights, while regular-gravity paths stay along the table." loading="lazy">
+    <figcaption>(a) The object floats in a containment volume until the robot touches or grasps it; then gravity switches
+      on. (b) To reach it, the gripper's paths spread through the 3D volume; with regular gravity they stay near the table
+      (schematic; the measured paths are under Results).</figcaption>
   </figure>
   <div class="two">
     <figure class="fig" style="margin:0">
-      <img src="static/images/fig_containment_render.png" alt="Ray-traced render: a Franka arm reaches through a glass box into which a red cube floats." loading="lazy">
+      <img src="static/images/fig_containment_render.png?v=20261023" alt="Render: a Franka arm reaches through a glass box into which a red cube floats." loading="lazy">
     </figure>
     <figure class="fig" style="margin:0">
-      <img src="static/images/fig_method_eval.png" alt="Schematic of supports holding objects at low, middle and high heights, to scale." loading="lazy">
+      <img src="static/images/fig_method_eval.png?v=20261023" alt="Schematic of supports holding objects at low, middle and high heights, to scale." loading="lazy">
     </figure>
   </div>
   <p style="margin-top:16px">
@@ -168,7 +171,7 @@
 
   <h3>They reach and handle raised objects, zero-shot</h3>
   <figure class="fig">
-    <img src="static/images/fig_stages_by_task.png?v=20261022b" alt="Per-task staged curves for six tasks." loading="lazy">
+    <img src="static/images/fig_stages_by_task.png?v=20261023" alt="Per-task staged curves for six tasks." loading="lazy">
     <figcaption><b>Zero-shot staged performance per task</b> (all heights). Ahead at the reach and touch stages on five of
       six tasks; on RollBall the policies are close. Zero-shot task success is low for every policy (9.8% for zero gravity vs. 3.6&ndash;4.8% for the
       baselines, mean over tasks), because the variants add a step no expert was trained for (bringing the object off its
@@ -182,6 +185,15 @@
       for every other starting point. (b) Learning speed (mean success over the first 10M steps) on seven tasks: ahead on
       five, clearly on PullCube, PlaceSphere and RollBall.</figcaption>
   </figure>
+
+  <h3>Next steps</h3>
+  <p>
+    Our experts are state-based; distilling their demonstrations into vision-language-action models and real-robot tests
+    are ongoing. Zero gravity is a separate axis from task setup and task scale, so zero-gravity versions of multi-task
+    suites could add spatial variety on top of the diversity those suites provide. <b>Manipulation in space</b> is a
+    natural direction: in orbit, objects float for the whole task, and a fixed-base arm handling floating objects is very
+    close to what this training setup already allows.
+  </p>
 </div></section>
 
 <!-- ================= BIBTEX ================= -->
